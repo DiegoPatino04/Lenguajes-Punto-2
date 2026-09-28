@@ -1,0 +1,13 @@
+{
+  "name": "odd_zeros",
+  "states": ["par", "impar"],
+  "alphabet": ["0", "1"],
+  "start": "par",
+  "finals": ["impar"],
+  "transitions": [
+    ["par", "0", "impar"],
+    ["impar", "0", "par"],
+    ["par", "1", "par"],
+    ["impar", "1", "impar"]
+  ]
+}

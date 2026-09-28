@@ -1,0 +1,188 @@
+Punto 2.1 - L = (01)+ ∪ (010)+
+Ejecución iniciada: 2026-09-27 18:52:38
+
+==============================================================================
+1. Definición formal
+==============================================================================
+M = (Q, Σ, δ, q0, F)      [p21_repeating_patterns]
+Q  = {q0, q1, q2, q3, q4, q5, q6, q7}
+Σ  = {0, 1}
+q0 = q0
+F  = {q3, q7}
+δ  (los pares no listados equivalen a ∅):
+   δ(q0, ε) = {q1, q4}
+   δ(q1, 0) = {q2}
+   δ(q2, 1) = {q3}
+   δ(q3, ε) = {q1}
+   δ(q4, 0) = {q5}
+   δ(q5, 1) = {q6}
+   δ(q6, 0) = {q7}
+   δ(q7, ε) = {q4}
+
+==============================================================================
+2. Matriz de transición extendida (→ inicial, * finales)
+==============================================================================
+| δ   | 0    | 1    | ε        | ε-cierre     |
+|-----|------|------|----------|--------------|
+| →q0 | ∅    | ∅    | {q1, q4} | {q0, q1, q4} |
+| q1  | {q2} | ∅    | ∅        | {q1}         |
+| q2  | ∅    | {q3} | ∅        | {q2}         |
+| *q3 | ∅    | ∅    | {q1}     | {q1, q3}     |
+| q4  | {q5} | ∅    | ∅        | {q4}         |
+| q5  | ∅    | {q6} | ∅        | {q5}         |
+| q6  | {q7} | ∅    | ∅        | {q6}         |
+| *q7 | ∅    | ∅    | {q4}     | {q4, q7}     |
+
+==============================================================================
+3. Diagrama
+==============================================================================
+escrito: C:\Users\patin\Desktop\Ingenieria en sistemas\2026-2\Lenguajes\taller 1\codigos\Punto_2\Lenguajes-Punto-2\point_2\p21_repeating_patterns\evidence\p21_diagram.dot
+Graphviz ('dot') no encontrado: renderice el .dot con 'dot -Tpng archivo.dot -o archivo.png'.
+
+==============================================================================
+4. Trazas δ*
+==============================================================================
+
+--- PALABRA VÁLIDA: 010101 ----------------------------------------
+Palabra: 010101   (longitud 6)
+
+| pos | leído | restante | activos antes | después de δ | después de ε-cierre |
+|-----|-------|----------|---------------|--------------|---------------------|
+| 0   | -     | 010101   | -             | {q0}         | {q0, q1, q4}        |
+| 1   | 0     | 10101    | {q0, q1, q4}  | {q2, q5}     | {q2, q5}            |
+| 2   | 1     | 0101     | {q2, q5}      | {q3, q6}     | {q1, q3, q6}        |
+| 3   | 0     | 101      | {q1, q3, q6}  | {q2, q7}     | {q2, q4, q7}        |
+| 4   | 1     | 01       | {q2, q4, q7}  | {q3}         | {q1, q3}            |
+| 5   | 0     | 1        | {q1, q3}      | {q2}         | {q2}                |
+| 6   | 1     | λ        | {q2}          | {q3}         | {q1, q3}            |
+
+Cadena δ*:
+δ*(q0, λ) = ECLOSE({q0}) = {q0, q1, q4}
+δ*(q0, 0) = ECLOSE(δ({q0, q1, q4}, 0)) = ECLOSE({q2, q5}) = {q2, q5}
+δ*(q0, 01) = ECLOSE(δ({q2, q5}, 1)) = ECLOSE({q3, q6}) = {q1, q3, q6}
+δ*(q0, 010) = ECLOSE(δ({q1, q3, q6}, 0)) = ECLOSE({q2, q7}) = {q2, q4, q7}
+δ*(q0, 0101) = ECLOSE(δ({q2, q4, q7}, 1)) = ECLOSE({q3}) = {q1, q3}
+δ*(q0, 01010) = ECLOSE(δ({q1, q3}, 0)) = ECLOSE({q2}) = {q2}
+δ*(q0, 010101) = ECLOSE(δ({q2}, 1)) = ECLOSE({q3}) = {q1, q3}
+
+ACEPTADA: δ*(q0, w) = {q1, q3} contiene el/los estado(s) final(es) {q3}
+
+--- PALABRA VÁLIDA: 010010 ----------------------------------------
+Palabra: 010010   (longitud 6)
+
+| pos | leído | restante | activos antes | después de δ | después de ε-cierre |
+|-----|-------|----------|---------------|--------------|---------------------|
+| 0   | -     | 010010   | -             | {q0}         | {q0, q1, q4}        |
+| 1   | 0     | 10010    | {q0, q1, q4}  | {q2, q5}     | {q2, q5}            |
+| 2   | 1     | 0010     | {q2, q5}      | {q3, q6}     | {q1, q3, q6}        |
+| 3   | 0     | 010      | {q1, q3, q6}  | {q2, q7}     | {q2, q4, q7}        |
+| 4   | 0     | 10       | {q2, q4, q7}  | {q5}         | {q5}                |
+| 5   | 1     | 0        | {q5}          | {q6}         | {q6}                |
+| 6   | 0     | λ        | {q6}          | {q7}         | {q4, q7}            |
+
+Cadena δ*:
+δ*(q0, λ) = ECLOSE({q0}) = {q0, q1, q4}
+δ*(q0, 0) = ECLOSE(δ({q0, q1, q4}, 0)) = ECLOSE({q2, q5}) = {q2, q5}
+δ*(q0, 01) = ECLOSE(δ({q2, q5}, 1)) = ECLOSE({q3, q6}) = {q1, q3, q6}
+δ*(q0, 010) = ECLOSE(δ({q1, q3, q6}, 0)) = ECLOSE({q2, q7}) = {q2, q4, q7}
+δ*(q0, 0100) = ECLOSE(δ({q2, q4, q7}, 0)) = ECLOSE({q5}) = {q5}
+δ*(q0, 01001) = ECLOSE(δ({q5}, 1)) = ECLOSE({q6}) = {q6}
+δ*(q0, 010010) = ECLOSE(δ({q6}, 0)) = ECLOSE({q7}) = {q4, q7}
+
+ACEPTADA: δ*(q0, w) = {q4, q7} contiene el/los estado(s) final(es) {q7}
+
+--- PALABRA VÁLIDA: 010010010 ----------------------------------------
+Palabra: 010010010   (longitud 9)
+
+| pos | leído | restante  | activos antes | después de δ | después de ε-cierre |
+|-----|-------|-----------|---------------|--------------|---------------------|
+| 0   | -     | 010010010 | -             | {q0}         | {q0, q1, q4}        |
+| 1   | 0     | 10010010  | {q0, q1, q4}  | {q2, q5}     | {q2, q5}            |
+| 2   | 1     | 0010010   | {q2, q5}      | {q3, q6}     | {q1, q3, q6}        |
+| 3   | 0     | 010010    | {q1, q3, q6}  | {q2, q7}     | {q2, q4, q7}        |
+| 4   | 0     | 10010     | {q2, q4, q7}  | {q5}         | {q5}                |
+| 5   | 1     | 0010      | {q5}          | {q6}         | {q6}                |
+| 6   | 0     | 010       | {q6}          | {q7}         | {q4, q7}            |
+| 7   | 0     | 10        | {q4, q7}      | {q5}         | {q5}                |
+| 8   | 1     | 0         | {q5}          | {q6}         | {q6}                |
+| 9   | 0     | λ         | {q6}          | {q7}         | {q4, q7}            |
+
+Cadena δ*:
+δ*(q0, λ) = ECLOSE({q0}) = {q0, q1, q4}
+δ*(q0, 0) = ECLOSE(δ({q0, q1, q4}, 0)) = ECLOSE({q2, q5}) = {q2, q5}
+δ*(q0, 01) = ECLOSE(δ({q2, q5}, 1)) = ECLOSE({q3, q6}) = {q1, q3, q6}
+δ*(q0, 010) = ECLOSE(δ({q1, q3, q6}, 0)) = ECLOSE({q2, q7}) = {q2, q4, q7}
+δ*(q0, 0100) = ECLOSE(δ({q2, q4, q7}, 0)) = ECLOSE({q5}) = {q5}
+δ*(q0, 01001) = ECLOSE(δ({q5}, 1)) = ECLOSE({q6}) = {q6}
+δ*(q0, 010010) = ECLOSE(δ({q6}, 0)) = ECLOSE({q7}) = {q4, q7}
+δ*(q0, 0100100) = ECLOSE(δ({q4, q7}, 0)) = ECLOSE({q5}) = {q5}
+δ*(q0, 01001001) = ECLOSE(δ({q5}, 1)) = ECLOSE({q6}) = {q6}
+δ*(q0, 010010010) = ECLOSE(δ({q6}, 0)) = ECLOSE({q7}) = {q4, q7}
+
+ACEPTADA: δ*(q0, w) = {q4, q7} contiene el/los estado(s) final(es) {q7}
+
+--- PALABRA INVÁLIDA: 0110 ----------------------------------------
+Palabra: 0110   (longitud 4)
+
+| pos | leído | restante | activos antes | después de δ | después de ε-cierre |
+|-----|-------|----------|---------------|--------------|---------------------|
+| 0   | -     | 0110     | -             | {q0}         | {q0, q1, q4}        |
+| 1   | 0     | 110      | {q0, q1, q4}  | {q2, q5}     | {q2, q5}            |
+| 2   | 1     | 10       | {q2, q5}      | {q3, q6}     | {q1, q3, q6}        |
+| 3   | 1     | 0        | {q1, q3, q6}  | ∅            | ∅                   |
+
+Cadena δ*:
+δ*(q0, λ) = ECLOSE({q0}) = {q0, q1, q4}
+δ*(q0, 0) = ECLOSE(δ({q0, q1, q4}, 0)) = ECLOSE({q2, q5}) = {q2, q5}
+δ*(q0, 01) = ECLOSE(δ({q2, q5}, 1)) = ECLOSE({q3, q6}) = {q1, q3, q6}
+δ*(q0, 011) = ECLOSE(δ({q1, q3, q6}, 1)) = ECLOSE(∅) = ∅
+
+RECHAZADA: ningún estado activo tras leer el símbolo 3; δ*(q0, w) = ∅ (entrada sin leer: 0)
+
+--- PALABRA INVÁLIDA: 10 ----------------------------------------
+Palabra: 10   (longitud 2)
+
+| pos | leído | restante | activos antes | después de δ | después de ε-cierre |
+|-----|-------|----------|---------------|--------------|---------------------|
+| 0   | -     | 10       | -             | {q0}         | {q0, q1, q4}        |
+| 1   | 1     | 0        | {q0, q1, q4}  | ∅            | ∅                   |
+
+Cadena δ*:
+δ*(q0, λ) = ECLOSE({q0}) = {q0, q1, q4}
+δ*(q0, 1) = ECLOSE(δ({q0, q1, q4}, 1)) = ECLOSE(∅) = ∅
+
+RECHAZADA: ningún estado activo tras leer el símbolo 1; δ*(q0, w) = ∅ (entrada sin leer: 0)
+
+Palabra adicional (no cuenta en el veredicto): 0101010
+Motivo: el enunciado lo lista como válido, pero no es una repetición de 01 ni de 010; el autómata sigue la definición formal
+
+--- A CONFIRMAR: 0101010 ----------------------------------------
+Palabra: 0101010   (longitud 7)
+
+| pos | leído | restante | activos antes | después de δ | después de ε-cierre |
+|-----|-------|----------|---------------|--------------|---------------------|
+| 0   | -     | 0101010  | -             | {q0}         | {q0, q1, q4}        |
+| 1   | 0     | 101010   | {q0, q1, q4}  | {q2, q5}     | {q2, q5}            |
+| 2   | 1     | 01010    | {q2, q5}      | {q3, q6}     | {q1, q3, q6}        |
+| 3   | 0     | 1010     | {q1, q3, q6}  | {q2, q7}     | {q2, q4, q7}        |
+| 4   | 1     | 010      | {q2, q4, q7}  | {q3}         | {q1, q3}            |
+| 5   | 0     | 10       | {q1, q3}      | {q2}         | {q2}                |
+| 6   | 1     | 0        | {q2}          | {q3}         | {q1, q3}            |
+| 7   | 0     | λ        | {q1, q3}      | {q2}         | {q2}                |
+
+Cadena δ*:
+δ*(q0, λ) = ECLOSE({q0}) = {q0, q1, q4}
+δ*(q0, 0) = ECLOSE(δ({q0, q1, q4}, 0)) = ECLOSE({q2, q5}) = {q2, q5}
+δ*(q0, 01) = ECLOSE(δ({q2, q5}, 1)) = ECLOSE({q3, q6}) = {q1, q3, q6}
+δ*(q0, 010) = ECLOSE(δ({q1, q3, q6}, 0)) = ECLOSE({q2, q7}) = {q2, q4, q7}
+δ*(q0, 0101) = ECLOSE(δ({q2, q4, q7}, 1)) = ECLOSE({q3}) = {q1, q3}
+δ*(q0, 01010) = ECLOSE(δ({q1, q3}, 0)) = ECLOSE({q2}) = {q2}
+δ*(q0, 010101) = ECLOSE(δ({q2}, 1)) = ECLOSE({q3}) = {q1, q3}
+δ*(q0, 0101010) = ECLOSE(δ({q1, q3}, 0)) = ECLOSE({q2}) = {q2}
+
+RECHAZADA: δ*(q0, w) = {q2} no contiene ningún estado final (F = {q3, q7})
+
+==============================================================================
+Resultado
+==============================================================================
+TODAS LAS PALABRAS DIERON EL VEREDICTO ESPERADO
